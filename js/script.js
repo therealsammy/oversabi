@@ -36,15 +36,28 @@
       e.preventDefault();
 
       if (email.value.match(emailFormat)) {
-        // sendmail(email);
-        // success;
-        console.log("success");
+        successMessage();
       } else {
-        // emptyerror();
-        console.log("error");
+        emptyError();
       }
     });
   }
 
   validate();
+
+  function emptyError() {
+    swal({
+      title: "Sorry.",
+      text: "Invalid email. Please enter a valid email address",
+      icon: "error",
+    });
+  }
+
+  function successMessage() {
+    swal({
+      title: "Success",
+      text: "Thank you for subscribing to our newsletter service.",
+      icon: "success",
+    });
+  }
 })();
