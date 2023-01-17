@@ -434,9 +434,29 @@ header{
 /****** Articles end *******/
 
 
-
 /****** Community *******/
 
+.community-content{
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    gap: 24px;
+    justify-content: center;
+}
+
+.community-box{
+    padding: 20px 10px;
+    background: border-box;
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
+.community-box h2{
+    font-size: 1.2rem;
+}
+
+.community-box span{
+    font-size: 0.845rem;
+}
 
 
 
