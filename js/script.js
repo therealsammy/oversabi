@@ -36,7 +36,23 @@
       e.preventDefault();
 
       if (email.value.match(emailFormat)) {
-        successMessage();
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "../php/save_email.php", true);
+        xhr.setRequestHeader(
+          "Content-type",
+          "application/x-www-form-urlencoded"
+        );
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            if (response.status === "success") {
+              alert(response.message);
+            } else {
+              alert(response.message);
+            }
+          }
+        };
+        xhr.send(email);
       } else {
         emptyError();
       }
