@@ -1,6 +1,6 @@
 <?php
 //connect to the database
-$conn = new mysqli("host", "username", "password", "newsletter_db");
+$conn = new mysqli("localhost", "root", "", "newsletter_db");
 // check connection
 if ($conn->connect_error) {
     $response = array(
@@ -9,12 +9,12 @@ if ($conn->connect_error) {
     );
     echo json_encode($response);
     die();
-} 
+}
 
 $email = $_POST['email'];
 
 //validate email address
-if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $response = array(
         "status" => "error",
         "message" => "Invalid email address."
@@ -33,8 +33,7 @@ if ($result->num_rows > 0) {
     );
     echo json_encode($response);
     die();
-}
-else {
+} else {
     // create the table if it doesn't exist
     $conn->query("CREATE TABLE IF NOT EXISTS emails (email VARCHAR(255))");
     // insert the email address into the table
@@ -46,4 +45,3 @@ else {
     echo json_encode($response);
 }
 $conn->close();
-?>
