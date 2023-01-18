@@ -1,6 +1,6 @@
 <?php
 //connect to the database
-$conn = new mysqli("host", "username", "password", "database_name");
+$conn = new mysqli("host", "username", "password", "newsletter_db");
 // check connection
 if ($conn->connect_error) {
     $response = array(
