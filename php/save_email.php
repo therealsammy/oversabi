@@ -1,8 +1,8 @@
 <?php
-
-//connect to the database
+// Connect to the database
 $conn = new mysqli("localhost", "root", "", "newsletter_db");
-// check connection
+
+// Check connection
 if ($conn->connect_error) {
     $response = array(
         "status" => "error",
@@ -12,11 +12,13 @@ if ($conn->connect_error) {
     die();
 }
 
+// Get the email address from the request
 $data = json_decode(file_get_contents('php://input'), true);
-if (json_last_error() != JSON_ERROR_NONE) {
+
+if (!is_array($data)) {
     $response = array(
         "status" => "error",
-        "message" => "Invalid json format."
+        "message" => "Invalid data format. Please send a json format"
     );
     echo json_encode($response);
     die();
@@ -24,7 +26,6 @@ if (json_last_error() != JSON_ERROR_NONE) {
 
 $email = mysqli_real_escape_string($conn, $data['email']);
 
-//validate email address
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $response = array(
         "status" => "error",
@@ -34,7 +35,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die();
 }
 
-// check if the email address already exists in the database
+// Check if the email address already exists in the database
 $result = $conn->query("SELECT email FROM emails WHERE email='$email'");
 
 if ($result->num_rows > 0) {
@@ -45,13 +46,28 @@ if ($result->num_rows > 0) {
     echo json_encode($response);
     die();
 } else {
-    // create the table if it doesn't exist
-    $conn->query("CREATE TABLE IF NOT EXISTS emails (email VARCHAR(255))");
-    // insert the email address into the table
-    $conn->query("INSERT INTO emails (email) VALUES ('$email')");
+    // Create the table if it doesn't exist
+    if (!$conn->query("CREATE TABLE IF NOT EXISTS emails (email VARCHAR(255))")) {
+        $response = array(
+            "status" => "error",
+            "message" => "Table creation failed: " . $conn->error
+        );
+        echo json_encode($response);
+        die();
+    }
+    // Insert the email address into the table
+    if (!$conn->query("INSERT INTO emails (email) VALUES ('$email')")) {
+        $response = array(
+            "status" => "error",
+            "message" => "Insert failed: " . $conn->error
+        );
+        echo json_encode($response);
+        die();
+    }
     $response = array(
         "status" => "success",
         "message" => "Email has been added to our newsletter list."
     );
     echo json_encode($response);
 }
+$conn->close();

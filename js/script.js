@@ -26,59 +26,59 @@
 
   // Email JS
 
-  function validate() {
+  // Validate email address and check if it's already in the database
+function validate() {
     const email = document.querySelector(".email");
     const submit = document.querySelector(".subscribe-btn");
-    const emailFormat =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     submit.addEventListener("click", (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      if (emailFormat.test(email.value)) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "./php/save_email.php", true);
-        xhr.setRequestHeader("Content-type", "application/json");
+        if (email.value.match(emailFormat)) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "./php/save_email.php", true);
+            xhr.setRequestHeader("Content-type", "application/json");
 
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              const response = xhr.responseText;
-              console.log(response)
-              // if (response.status === "success") {
-              //   successMessage();
-              // } else {
-              //   emptyError(response.message);
-              // }
-            } else {
-              emptyError("Sever Error");
-            }
-          }
-        };
-        const data = { "email": email.value };
-        const json = JSON.stringify(data);
-        xhr.send(json);
-      } else {
-        emptyError("Invalid email. Please enter a valid email address");
-      }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    // console.log(response);
+                    if (response.status === "success") {
+                        successMessage();
+                    } else {
+                        errorMessage(response.message);
+                    }
+                }
+            };
+
+            const data = { "email": email.value };
+            const json = JSON.stringify(data);
+            xhr.send(json);
+        } else {
+            errorMessage("Invalid email. Please enter a valid email address");
+        }
     });
-  }
+}
 
-  validate();
+validate();
 
-  function emptyError(message) {
+// Show error message
+function errorMessage(message) {
     swal({
-      title: "Sorry.",
-      text: message,
-      icon: "error",
+        title: "Sorry.",
+        text: message,
+        icon: "error",
     });
-  }
+}
 
-  function successMessage() {
+// Show success message
+function successMessage() {
     swal({
-      title: "Success",
-      text: "Thank you for subscribing to our newsletter service.",
-      icon: "success",
+        title: "Success",
+        text: "Thank you for subscribing to our newsletter service.",
+        icon: "success",
     });
-  }
+}
+
 })();
