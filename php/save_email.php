@@ -1,4 +1,11 @@
 <?php
+
+require_once 'vendor/autoload.php';
+
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mime\Email;
+
 // Connect to the database
 $conn = new mysqli("localhost", "root", "", "newsletter_db");
 
@@ -69,5 +76,19 @@ if ($result->num_rows > 0) {
         "message" => "Email has been added to our newsletter list."
     );
     echo json_encode($response);
+
+    // Create a new email message
+    $message = (new Email())
+        ->from('newsletter@example.com')
+        ->to($email)
+        ->subject('Welcome to our newsletter service')
+        ->text('Thank you for subscribing to our newsletter service. We will keep you updated with our latest news and offers.');
+
+    // Create an instance of the mailer using an SMTP transport
+    $transport = new EsmtpTransport('smtp.example.com', 25, 'tls', null, null);
+    $mailer = new Mailer($transport);
+
+    // Send the email
+    $mailer->send($message);
 }
 $conn->close();

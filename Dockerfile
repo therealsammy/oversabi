@@ -8,8 +8,8 @@ RUN apt-get update && \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install SwiftMailer
-RUN composer require "swiftmailer/swiftmailer"
+# Install Symfony mailer
+RUN composer require "symfony/mailer"
 
 COPY . /var/www/html
 

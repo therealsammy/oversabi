@@ -53,7 +53,7 @@ function validate() {
             };
 
             const data = { "email": email.value };
-            const json = JSON.stringify(data);
+            const json = JSON.parse(data);
             xhr.send(json);
         } else {
             errorMessage("Invalid email. Please enter a valid email address");
