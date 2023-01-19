@@ -125,3 +125,11 @@ xhr.onreadystatechange = function() {
 }
 xhr.send("email=" + email);
 
+
+
+xhr.open("POST", "./php/save_email.php", true);
+xhr.setRequestHeader("Content-type", "application/json");
+
+const data = { email: email.value };
+const json = JSON.stringify(data);
+xhr.send(json);
