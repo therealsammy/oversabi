@@ -35,36 +35,41 @@
     submit.addEventListener("click", (e) => {
       e.preventDefault();
 
-      if (email.value.match(emailFormat)) {
+      if (emailFormat.test(email.value)) {
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "../php/save_email.php", true);
-        xhr.setRequestHeader(
-          "Content-type",
-          "application/x-www-form-urlencoded"
-        );
+        xhr.open("POST", "./php/save_email.php", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+
         xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            let response = JSON.parse(xhr.responseText);
-            if (response.status === "success") {
-              alert(response.message);
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              const response = xhr.responseText;
+              console.log(response)
+              // if (response.status === "success") {
+              //   successMessage();
+              // } else {
+              //   emptyError(response.message);
+              // }
             } else {
-              alert(response.message);
+              emptyError("Sever Error");
             }
           }
         };
-        xhr.send(email);
+        const data = { "email": email.value };
+        const json = JSON.stringify(data);
+        xhr.send(json);
       } else {
-        emptyError();
+        emptyError("Invalid email. Please enter a valid email address");
       }
     });
   }
 
   validate();
 
-  function emptyError() {
+  function emptyError(message) {
     swal({
       title: "Sorry.",
-      text: "Invalid email. Please enter a valid email address",
+      text: message,
       icon: "error",
     });
   }

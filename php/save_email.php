@@ -1,4 +1,5 @@
 <?php
+
 //connect to the database
 $conn = new mysqli("localhost", "root", "", "newsletter_db");
 // check connection
@@ -11,7 +12,17 @@ if ($conn->connect_error) {
     die();
 }
 
-$email = $_POST['email'];
+$data = json_decode(file_get_contents('php://input'), true);
+if (json_last_error() != JSON_ERROR_NONE) {
+    $response = array(
+        "status" => "error",
+        "message" => "Invalid json format."
+    );
+    echo json_encode($response);
+    die();
+}
+
+$email = mysqli_real_escape_string($conn, $data['email']);
 
 //validate email address
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -44,4 +55,3 @@ if ($result->num_rows > 0) {
     );
     echo json_encode($response);
 }
-$conn->close();
