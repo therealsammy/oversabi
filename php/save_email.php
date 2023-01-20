@@ -79,13 +79,13 @@ if ($result->num_rows > 0) {
 
     // Create a new email message
     $message = (new Email())
-        ->from('newsletter@example.com')
+        ->from('faaakme69@gmail.com')
         ->to($email)
         ->subject('Welcome to our newsletter service')
         ->text('Thank you for subscribing to our newsletter service. We will keep you updated with our latest news and offers.');
 
     // Create an instance of the mailer using an SMTP transport
-    $transport = new EsmtpTransport('smtp.example.com', 25, 'tls', null, null);
+    $transport = new EsmtpTransport('smtp.gmail.com', 587, 'tls', 'faaakme69@gmail.com', 'dummyemailaddress');
     $mailer = new Mailer($transport);
 
     // Send the email
