@@ -29,6 +29,7 @@ class ComposerStaticInit698e54b402e3f2d5474d448d34d8727f
             'Symfony\\Component\\Mime\\' => 23,
             'Symfony\\Component\\Mailer\\' => 25,
             'Symfony\\Component\\EventDispatcher\\' => 34,
+            'Symfony\\Component\\Dotenv\\' => 25,
         ),
         'P' => 
         array (
@@ -97,6 +98,10 @@ class ComposerStaticInit698e54b402e3f2d5474d448d34d8727f
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
+        ),
+        'Symfony\\Component\\Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dotenv',
         ),
         'Psr\\Log\\' => 
         array (

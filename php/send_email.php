@@ -4,6 +4,11 @@ require_once 'vendor/autoload.php';
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Dotenv\Dotenv;
+
+// Load environment variables
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__ . '/.env');
 
 // Get the email address from the request
 $data = json_decode(file_get_contents('php://input'), true);
@@ -30,13 +35,15 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // Create a new email message
 $message = (new Email())
-    ->from('newsletter@example.com')
+    ->from($_ENV['MAILER_USER'])
     ->to($email)
     ->subject('Welcome to our newsletter service')
     ->text('Thank you for subscribing to our newsletter service. We will keep you updated with our latest news and offers.');
 
 // Create an instance of the mailer using an SMTP transport
-$transport = new EsmtpTransport('smtp.gmail.com', 587, 'tls', 'your-email-address@gmail.com', 'your-email-password');
+$transport = new EsmtpTransport($_ENV['MAILER_URL'], 587, 'tls', null, null);
+$transport->setUsername($_ENV['MAILER_USER']);
+$transport->setPassword($_ENV['MAILER_PASSWORD']);
 $mailer = new Mailer($transport);
 
 // Send the email
