@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8.0-apache-buster
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -27,11 +27,6 @@ RUN composer require symfony/dotenv
 COPY . /var/www/html
 COPY .env /var/www/html/.env
 
-EXPOSE 6000
+EXPOSE 90
 
 CMD ["apache2-foreground"]
-
-# Copy .env file and run composer install
-COPY .env.example .env
-RUN composer install
-
