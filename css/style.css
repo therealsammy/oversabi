@@ -5,7 +5,7 @@
 
 :root{
     --main-color: #647bff;
-    --body-color: #090a1a;
+    --body-color: hsla(236, 49%, 7%);;
     --container-color: #171b3c;
     --heading-color: #222231;
     --box-color: #0d0f26;
@@ -66,6 +66,15 @@ li{
     max-width: 960px;
     margin: auto;
     width: 100%;
+}
+
+.dummy{
+    max-width: 100%;
+    width: 100%;
+    background-image: url('../images/globe.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover */
 }
 
 /****** Body end *******/
