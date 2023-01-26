@@ -3,13 +3,17 @@
   /**
    * This is a Immediately Invokes Function Expression
    * 
-   * It contains the function that controns the meuu toggle
-   * and the slider.
+   * It contains the function that controns the:
+   * Meuu Toggle
+   * Image slider
+   * Header background change
    */
 
   const menu = document.querySelector(".menu-icon");
+  const navbar = document.querySelector(".navbar")
 
   menu.addEventListener("click", () => {
+    navbar.classList.toggle("open-menu");
     menu.classList.toggle("show");
   });
 
@@ -26,6 +30,19 @@
       clickable: true,
     },
   })
+
+  // Header Background Change on Scroll
+
+  const header = document.querySelector("header");
+  const scroolTop = document.querySelector(".scroll-top")
+
+  window.addEventListener("scroll", () => {
+    header.classList.toggle('header-active', window.scrollY > 0);
+    scroolTop.classList.toggle('scroll-active', window.scrollY >= 400);
+    navbar.classList.remove("open-menu");
+    menu.classList.remove("show");
+  })
+
 })()
 
 
@@ -66,7 +83,9 @@ class Newsletter {
 
     /**
      * This function saves the email to database
-     * and calls the sendEmail function
+     * @param {string} xhr - Xml Http Response
+     * @param {object} data - Object to be sent to sever
+     * @param {object} response - xhr response text
      */
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "./php/save_email.php", true);
@@ -76,7 +95,6 @@ class Newsletter {
         let response = JSON.parse(xhr.responseText);
         if (response.status === "success") {
           this.showSuccess();
-          // this.sendEmail();
         } else {
           this.showError(response.message);
         }

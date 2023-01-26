@@ -1,7 +1,5 @@
 <?php
 
-// include_once "send_email.php";
-
 // Connect to the database
 $conn = new mysqli("localhost", "root", "", "newsletter_db");
 

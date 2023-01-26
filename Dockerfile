@@ -18,8 +18,8 @@ RUN apt-get update && apt-get install -y \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Symfony mailer
-RUN composer require "symfony/mailer"
+# Install php mailer
+RUN composer require "phpmailer/phpmailer"
 
 # Install dotenv
 RUN composer require symfony/dotenv
@@ -27,6 +27,6 @@ RUN composer require symfony/dotenv
 COPY . /var/www/html
 COPY .env /var/www/html/.env
 
-EXPOSE 90
+EXPOSE 80
 
 CMD ["apache2-foreground"]

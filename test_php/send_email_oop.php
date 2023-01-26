@@ -16,7 +16,7 @@ class Newsletter {
         $this->dotenv = new Dotenv();
         $this->dotenv->load(__DIR__.'/.env');
 
-        $this->conn = new mysqli("localhost", "root", "", "newsletter_db");
+        // $this->conn = new mysqli("localhost", "root", "", "newsletter_db");
 
 
         // Connect to the database using PDO

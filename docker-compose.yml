@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-      - "90:90"
+      - "80:80"
     volumes:
       - .:/var/www/html
     environment:
@@ -20,7 +20,7 @@ services:
   db:
     image: mysql:8.0
     ports:
-      - "3306:3306"
+      - "8080:80"
     environment:
       - MYSQL_ROOT_PASSWORD=""
       - MYSQL_DATABASE=newsletter_db
