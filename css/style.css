@@ -5,7 +5,8 @@
 
 :root{
     --main-color: #647bff;
-    --body-color: hsla(236, 49%, 7%);;
+    --body-color: rgba(9, 10, 27, 0.1);
+    --main-body-color: rgb(9, 10, 27);
     --container-color: #171b3c;
     --heading-color: #222231;
     --box-color: #0d0f26;
@@ -34,7 +35,7 @@
 /****** Body *******/
 body{
     color: var(--bg-color);
-    background: var(--body-color);
+    background: var(--main-body-color);
 }
 
 html::-webkit-scrollbar{
@@ -66,12 +67,22 @@ li{
     max-width: 960px;
     margin: auto;
     width: 100%;
+    background: var(--body-color);
 }
 
-.dummy{
+.home-container{
     max-width: 100%;
     width: 100%;
     background-image: url('../images/globe.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover */
+}
+
+.background-container{
+    max-width: 100%;
+    width: 100%;
+    background-image: url('../images/globe_rest.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover */
